@@ -1,5 +1,7 @@
 using OnlineStore.Catalog;
 using OnlineStore.Orders;
+using OnlineStore.Contracts.Products;
+using OnlineStore.Contracts.Orders;
 
 var builder = WebApplication.CreateBuilder(args);
 

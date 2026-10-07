@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging.Abstractions;
+using OnlineStore.Orders;
 using OnlineStore.Catalog;
 using OnlineStore.Contracts.Orders;
 using OnlineStore.Contracts.Products;
