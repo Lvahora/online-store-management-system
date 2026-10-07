@@ -1,0 +1,32 @@
+# Результаты сборки .NET
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+
+# Файлы настроек IDE
+*.user
+*.suo
+.vs/
+.idea/
+*.swp
+
+# NuGet пакеты
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+
+# Секреты и локальные настройки
+appsettings.Development.json
+secrets.json
+
+# Локальные базы данных
+*.db
+*.db-shm
+*.db-wal
+
+# Временные файлы ОС
+.DS_Store
+Thumbs.db
+
+# Результаты тестов
+[Tt]est[Rr]esult*/
