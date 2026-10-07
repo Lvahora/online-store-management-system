@@ -1,39 +1,23 @@
+using OnlineStore.Catalog;
+using OnlineStore.Orders;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddCatalogModule();
+builder.Services.AddOrdersModule();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.MapGet("/api/products/{id}", async (Guid id, IProductService productService, CancellationToken ct) =>
 {
-    app.MapOpenApi();
-}
+    var product = await productService.GetProductAsync(id, ct);
+    return product is null ? Results.NotFound() : Results.Ok(product);
+});
 
-var summaries = new[]
+app.MapPost("/api/orders", async (CreateOrderRequest request, OrderService orderService, CancellationToken ct) =>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+    var order = await orderService.CreateOrderAsync(request, ct);
+    return order is null ? Results.BadRequest("Не удалось создать заказ") : Results.Ok(order);
+});
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
