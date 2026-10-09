@@ -18,7 +18,7 @@ dotnet --version
 ### Получение проекта
 
 ```bash
-git clone https://github.com/fdasdfgdso-blip/hotel-management-system.git
+git clone https://github.com/Lvahora/online-store-management-system.git
 cd hotel-management-system
 ```
 
