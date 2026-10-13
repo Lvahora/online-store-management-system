@@ -39,4 +39,11 @@ public class ProductServiceTests
         var result = await _service.CheckStockAsync(productId, 1);
         Assert.False(result);
     }
+    [Fact]
+    public async Task CheckStock_ExactQuantity_ReturnsTrue()
+    {
+        var productId = Guid.Parse("11111111-1111-1111-1111-111111111111");
+        var result = await _service.CheckStockAsync(productId, 10);
+        Assert.True(result);
+    }
 }
