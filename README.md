@@ -43,7 +43,7 @@ dotnet test
 ### Запуск
 
 ```bash
-dotnet run --project src/HotelManagement.Api
+dotnet run --project src/OnlineStore.Api
 ```
 
 После запуска API становится доступно по адресу, указанному приложением в консоли.
