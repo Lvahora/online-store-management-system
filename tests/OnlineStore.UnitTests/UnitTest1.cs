@@ -1,4 +1,4 @@
-﻿namespace OnlineStore.UnitTests;
+namespace OnlineStore.UnitTests;
 
 public class UnitTest1
 {

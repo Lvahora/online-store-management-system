@@ -6,7 +6,7 @@ namespace OnlineStore.Orders;
 
 public class OrderService
 {
-    private readonly List<Order> _orders = new();
+    private readonly List<Order> _inMemoryOrders = new();
     private readonly IProductService _productService;
     private readonly ILogger<OrderService> _logger;
 
@@ -18,6 +18,24 @@ public class OrderService
 
     public async Task<OrderDto?> CreateOrderAsync(CreateOrderRequest request, CancellationToken cancellationToken = default)
     {
+        if (request == null)
+        {
+            _logger.LogError("Запрос на создание заказа не может быть null");
+            return null;
+        }
+
+        if (request.Items == null || request.Items.Count == 0)
+        {
+            _logger.LogWarning("Заказ должен содержать хотя бы один товар");
+            return null;
+        }
+
+        if (request.CustomerId == Guid.Empty)
+        {
+            _logger.LogWarning("Невалидный ID клиента: {CustomerId}", request.CustomerId);
+            return null;
+        }
+
         _logger.LogInformation("Создание заказа для клиента {CustomerId}", request.CustomerId);
 
         var order = new Order
@@ -65,7 +83,7 @@ public class OrderService
 
         order.TotalPrice = totalPrice;
         order.Status = "Created";
-        _orders.Add(order);
+        _inMemoryOrders.Add(order);
 
         _logger.LogInformation("Заказ {OrderId} создан на сумму {TotalPrice}", order.Id, order.TotalPrice);
 
